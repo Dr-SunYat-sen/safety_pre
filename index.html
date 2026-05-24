@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国家安全调研 | 分组一</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ink: #2c2c2c;
+            --red: #b91c1c;
+            --paper: #faf9f7;
+            --cream: #f5f3ef;
+            --gold: #d4a574;
+            --border: #d4d0c8;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 31px,
+                    rgba(0,0,0,0.02) 31px,
+                    rgba(0,0,0,0.02) 32px
+                );
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* 报纸头部 */
+        .newspaper-header {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 3rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--red) 0%, transparent 70%);
+            opacity: 0.15;
+            transform: translate(50%, -50%);
+        }
+
+        .masthead {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .edition-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--red);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            transform: rotate(-1deg);
+            position: relative;
+            display: inline-block;
+        }
+
+        .main-title::before {
+            content: '★';
+            position: absolute;
+            top: -20px;
+            left: -30px;
+            font-size: 1.5rem;
+            color: var(--red);
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--gold);
+            font-style: italic;
+            letter-spacing: 0.1em;
+        }
+
+        /* 手绘分隔线 */
+        .hand-drawn-line {
+            width: 200px;
+            height: 3px;
+            background: var(--red);
+            margin: 2rem auto;
+            position: relative;
+            transform: rotate(-0.5deg);
+        }
+
+        .hand-drawn-line::before,
+        .hand-drawn-line::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--red);
+            border-radius: 50%;
+            top: -3.5px;
+        }
+
+        .hand-drawn-line::before { left: -5px; }
+        .hand-drawn-line::after { right: -5px; }
+
+        /* 导航栏 */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: var(--cream);
+            border-bottom: 3px double var(--ink);
+            z-index: 999;
+            padding: 0.8rem 2rem;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--ink);
+            font-weight: 700;
+            font-size: 0.95rem;
+            position: relative;
+            transition: all 0.3s;
+            padding: 0.3rem 0;
+        }
+
+        .nav-menu a:hover {
+            color: var(--red);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 80%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--ink);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* 主内容区 - 报纸网格布局 */
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        /* 英雄区域 */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            padding: 3rem;
+            background: white;
+            border: 2px solid var(--border);
+            position: relative;
+            transform: rotate(-0.3deg);
+        }
+
+        .hero-section::before {
+            content: '特别报道';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--red);
+            color: white;
+            padding: 0.3rem 1rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transform: rotate(2deg);
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--ink);
+        }
+
+        .typewriter-text {
+            font-size: 1.3rem;
+            color: var(--red);
+            font-weight: 700;
+            min-height: 60px;
+            border-left: 4px solid var(--red);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.3rem;
+            background: var(--red);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .hero-stats {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--cream);
+            padding: 1.5rem;
+            border-left: 4px solid var(--red);
+            transform: rotate(1deg);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:nth-child(even) {
+            transform: rotate(-1deg);
+        }
+
+        .stat-card:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--red);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        /* 章节标题 - 编辑风格 */
+        .section-header {
+            margin: 4rem 0 2rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .section-number {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 6rem;
+            color: var(--red);
+            opacity: 0.15;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            line-height: 1;
+            z-index: 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            transform: rotate(-1deg);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--red), transparent);
+            margin-top: 0.5rem;
+            transform: skewX(-10deg);
+        }
+
+        /* 网格布局 - 杂志风格 */
+        .magazine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .article-card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--red);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .article-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px) rotate(0.5deg);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .card-label {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            padding: 0.25rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            transform: rotate(-2deg);
+        }
+
+        .article-card h3 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .article-card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 数据可视化区域 */
+        .data-visual {
+            background: white;
+            border: 2px solid var(--ink);
+            padding: 2.5rem;
+            margin: 3rem 0;
+            position: relative;
+            transform: rotate(0.2deg);
+        }
+
+        .data-visual::before {
+            content: '数据图表';
+            position: absolute;
+            top: -14px;
+            left: 30px;
+            background: var(--ink);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transform: rotate(-1deg);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 2rem 0;
+        }
+
+        .chart-caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+
+        /* 引用块 - 手绘风格 */
+        .quote-block {
+            background: var(--cream);
+            border-left: 5px solid var(--red);
+            padding: 2rem 2.5rem;
+            margin: 3rem 0;
+            position: relative;
+            font-size: 1.3rem;
+            font-style: italic;
+            line-height: 1.8;
+            transform: rotate(-0.5deg);
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 6rem;
+            color: var(--red);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-size: 1rem;
+            font-style: normal;
+            color: var(--gray);
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            margin: 3rem 0;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--red);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            width: calc(100% - 40px);
+            position: relative;
+            transform: rotate(-1deg);
+            transition: all 0.3s;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            transform: rotate(1deg);
+        }
+
+        .timeline-content:hover {
+            transform: rotate(0deg) scale(1.03);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            right: -22px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--red);
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px var(--red);
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -22px;
+            right: auto;
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+
+        /* 结论区域 */
+        .conclusion-section {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 4rem 3rem;
+            margin: 4rem 0;
+            position: relative;
+            transform: rotate(0.3deg);
+        }
+
+        .conclusion-section::before {
+            content: '结论与展望';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            background: var(--red);
+            color: white;
+            padding: 0.5rem 2rem;
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .conclusion-item {
+            border-left: 3px solid var(--red);
+            padding-left: 1.5rem;
+        }
+
+        .conclusion-item h4 {
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--ink);
+            color: var(--paper);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 5px solid var(--red);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--red);
+        }
+
+        .footer-text {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        /* 滚动动画 */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-on-scroll.left {
+            transform: translateX(-60px);
+        }
+
+        .animate-on-scroll.left.visible {
+            transform: translateX(0);
+        }
+
+        .animate-on-scroll.right {
+            transform: translateX(60px);
+        }
+
+        .animate-on-scroll.right.visible {
+            transform: translateX(0);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+            }
+
+            .magazine-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 60px;
+                padding-right: 0;
+            }
+
+            .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 12px;
+                right: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--cream);
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1rem;
+                border-bottom: 2px solid var(--border);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .content-wrapper {
+                padding: 1.5rem 1rem;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .hero-section {
+                padding: 1.5rem;
+            }
+
+            .data-visual {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .edition-info {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .quote-block {
+                font-size: 1.1rem;
+                padding: 1.5rem;
+            }
+        }
+
+        /* 手绘装饰元素 */
+        .sketch-circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 3px dashed var(--red);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: sketch-draw 3s ease-in-out infinite;
+        }
+
+        @keyframes sketch-draw {
+            0%, 100% { 
+                transform: rotate(0deg) scale(1); 
+                opacity: 0.3;
+            }
+            50% { 
+                transform: rotate(180deg) scale(1.1); 
+                opacity: 0.5;
+            }
+        }
+
+        .highlight-marker {
+            background: linear-gradient(to bottom, transparent 50%, rgba(212, 165, 116, 0.3) 50%);
+            padding: 0 0.3rem;
+        }
+
+        /* 打印机效果 */
+        .printer-effect {
+            animation: print-in 0.5s steps(40) forwards;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        @keyframes print-in {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* 隐藏类 */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 报纸头部 -->
+    <header class="newspaper-header">
+        <div class="masthead">
+            <div class="edition-info">
+                <span>2026年春季刊</span>
+                <span style="font-weight: 900;">国家安全专题调研</span>
+                <span>分组一 · 特别报道</span>
+            </div>
+            <h1 class="main-title">国家安全调研报告</h1>
+            <p class="subtitle">数据驱动 · 深度分析 · 理性思考</p>
+            <div class="hand-drawn-line"></div>
+        </div>
+    </header>
+
+    <!-- 导航 -->
+    <nav class="nav">
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-content">
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#overview">调研概述</a></li>
+                <li><a href="#politics">政治安全</a></li>
+                <li><a href="#territory">国土安全</a></li>
+                <li><a href="#military">军事安全</a></li>
+                <li><a href="#economy">经济安全</a></li>
+                <li><a href="#charts">数据分析</a></li>
+                <li><a href="#conclusion">结论展望</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="content-wrapper">
+        <!-- 英雄区域 -->
+        <section class="hero-section animate-on-scroll" id="overview">
+            <div class="hero-text">
+                <h1>总体国家安全观<br><span style="color: var(--red);">深度调研与分析</span></h1>
+                <div class="typewriter-text">
+                    <span id="typewriter"></span><span class="cursor"></span>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 1.05rem;">
+                    本项目围绕<span class="highlight-marker">政治、国土、军事、经济</span>四大基本安全领域，
+                    通过问卷调查、实地走访、文献研究等方式，收集并分析了大量一手数据，
+                    力求以客观理性的视角呈现当前国家安全形势。
+                </p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">286</div>
+                    <div class="stat-label">有效问卷数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">核心安全领域</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">数据维度</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 引言引用 -->
+        <blockquote class="quote-block animate-on-scroll">
+            国家安全是国家生存发展的基本前提。没有安全和稳定，一切都无从谈起。
+            <div class="quote-author">—— 总体国家安全观核心理念</div>
+        </blockquote>
+
+        <!-- 政治安全 -->
+        <section class="section-header animate-on-scroll" id="politics">
+            <div class="section-number">01</div>
+            <h2 class="section-title">政治安全：根本所在</h2>
+        </section>
+
+        <div class="magazine-grid">
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label">深度解读</span>
+                <h3>政治安全的战略地位</h3>
+                <p>
+                    政治安全是国家安全的<span class="highlight-marker">根本</span>，关系到国家政权、制度和意识形态的稳固。
+                    调研显示，超过<strong>92%</strong>的受访者认为政治安全是国家安全体系中最核心的组成部分。
+                </p>
+                <p>
+                    在当前复杂的国际形势下，维护政治安全需要坚持党的全面领导，
+                    完善国家安全法治体系，增强全民国家安全意识。
+                </p>
+            </article>
+
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label">数据发现</span>
+                <h3>民众认知度调查</h3>
+                <p>
+                    本次调研针对不同年龄段、职业背景的人群进行了政治安全认知度的问卷调查。
+                    结果表明：
+                </p>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="padding: 0.5rem 0; border-bottom: 1px dashed #ddd;">
+                        ✓ <strong>87.3%</strong> 的受访者对政治安全有基本了解
+                    </li>
+                    <li style="padding: 0.5rem 0; border-bottom: 1px dashed #ddd;">
+                        ✓ <strong>76.5%</strong> 认为当前政治安全形势总体稳定
+                    </li>
+                    <li style="padding: 0.5rem 0;">
+                        ✓ <strong>94.2%</strong> 表示愿意参与维护政治安全
+                    </li>
+                </ul>
+            </article>
+        </div>
+
+        <!-- 国土安全 -->
+        <section class="section-header animate-on-scroll" id="territory">
+            <div class="section-number">02</div>
+            <h2 class="section-title">国土安全：依托之基</h2>
+        </section>
+
+        <div class="magazine-grid">
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label">专题分析</span>
+                <h3>领土完整与边疆治理</h3>
+                <p>
+                    国土安全是国家安全的重要依托，涵盖陆地、海洋、领空等各个维度。
+                    我国拥有<span class="highlight-marker">960万平方公里</span>陆地疆域和约300万平方公里的管辖海域，
+                    维护领土完整是国家的核心利益。
+                </p>
+                <p>
+                    近年来，在边海防建设、领土争端应对等方面取得了显著成效，
+                    国土安全保障能力持续提升。
+                </p>
+            </article>
+
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label">关键指标</span>
+                <h3>边境管控能力提升</h3>
+                <p>
+                    调研数据显示：
+                </p>
+                <div style="background: var(--cream); padding: 1.5rem; margin: 1rem 0; border-left: 4px solid var(--red);">
+                    <div style="font-size: 2rem; font-weight: 900; color: var(--red);">98.6%</div>
+                    <div style="font-size: 0.9rem; color: #666;">边境地区群众安全感指数</div>
+                </div>
+                <p>
+                    边防基础设施建设投入持续增加，科技防控手段广泛应用，
+                    形成了人防、物防、技防相结合的立体化边境防控体系。
+                </p>
+            </article>
+        </div>
+
+        <!-- 军事安全 -->
+        <section class="section-header animate-on-scroll" id="military">
+            <div class="section-number">03</div>
+            <h2 class="section-title">军事安全：坚强保障</h2>
+        </section>
+
+        <div class="magazine-grid">
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label">战略视角</span>
+                <h3>国防现代化进程</h3>
+                <p>
+                    军事安全是国家安全的<span class="highlight-marker">坚强保障</span>。
+                    在新时代强军目标的指引下，我国国防和军队现代化建设取得历史性成就。
+                </p>
+                <p>
+                    从武器装备更新换代到军事训练实战化改革，
+                    从联合作战能力提升到国防科技创新突破，
+                    军队战斗力实现了整体性跃升。
+                </p>
+            </article>
+
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label">民意调查</span>
+                <h3>国民军事信心指数</h3>
+                <p>
+                    调研中关于军事安全的问题引发了热烈讨论：
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                    <div style="text-align: center; padding: 1rem; background: var(--cream);">
+                        <div style="font-size: 1.8rem; font-weight: 900; color: var(--red);">96.8%</div>
+                        <div style="font-size: 0.85rem;">对军队有信心</div>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: var(--cream);">
+                        <div style="font-size: 1.8rem; font-weight: 900; color: var(--red);">91.2%</div>
+                        <div style="font-size: 0.85rem;">支持军费增长</div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- 经济安全 -->
+        <section class="section-header animate-on-scroll" id="economy">
+            <div class="section-number">04</div>
+            <h2 class="section-title">经济安全：坚实基础</h2>
+        </section>
+
+        <div class="magazine-grid">
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label">核心议题</span>
+                <h3>经济发展与安全统筹</h3>
+                <p>
+                    经济安全是国家安全的<span class="highlight-marker">基础</span>。
+                    在全球化背景下，经济安全问题日益复杂，涉及金融、能源、粮食、产业链等多个领域。
+                </p>
+                <p>
+                    统筹发展和安全，既要保持经济平稳健康发展，
+                    又要有效防范化解各类风险挑战，确保国家经济命脉牢牢掌握在自己手中。
+                </p>
+            </article>
+
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label">调研洞察</span>
+                <h3>经济安全关注点</h3>
+                <p>
+                    受访者最关心的经济安全议题排序：
+                </p>
+                <ol style="padding-left: 1.5rem; line-height: 2;">
+                    <li><strong>金融安全</strong>（78.3%）</li>
+                    <li><strong>产业链供应链安全</strong>（72.1%）</li>
+                    <li><strong>能源安全</strong>（68.9%）</li>
+                    <li><strong>粮食安全</strong>（65.4%）</li>
+                    <li><strong>数据安全</strong>（61.7%）</li>
+                </ol>
+            </article>
+        </div>
+
+        <!-- 数据可视化部分 -->
+        <section class="section-header animate-on-scroll" id="charts">
+            <div class="section-number">DATA</div>
+            <h2 class="section-title">数据图表分析</h2>
+        </section>
+
+        <div class="data-visual animate-on-scroll">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">图2 社会安全案件指标同比变化</h3>
+            <div class="chart-container">
+                <canvas id="chart2"></canvas>
+            </div>
+            <p class="chart-caption">数据来源：国家安全调研数据总表 | 单位：%</p>
+        </div>
+
+        <div class="data-visual animate-on-scroll">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">图3 网络空间治理执法数据</h3>
+            <div class="chart-container">
+                <canvas id="chart3"></canvas>
+            </div>
+            <p class="chart-caption">数据来源：网络安全执法统计 | 展示网络空间治理成效</p>
+        </div>
+
+        <div class="data-visual animate-on-scroll">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">图4 能源安全相关指标增长情况</h3>
+            <div class="chart-container">
+                <canvas id="chart4"></canvas>
+            </div>
+            <p class="chart-caption">数据来源：能源发展统计 | 反映能源安全保障能力提升</p>
+        </div>
+
+        <div class="data-visual animate-on-scroll">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">图5 网民规模与互联网普及率变化</h3>
+            <div class="chart-container">
+                <canvas id="chart5"></canvas>
+            </div>
+            <p class="chart-caption">数据来源：中国互联网络信息中心 | 数字化发展态势</p>
+        </div>
+
+        <!-- 结论与展望 -->
+        <section class="conclusion-section animate-on-scroll" id="conclusion">
+            <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">主要结论与未来展望</h2>
+            
+            <div class="conclusion-grid">
+                <div class="conclusion-item">
+                    <h4>01 整体态势向好</h4>
+                    <p>
+                        调研数据表明，我国四大基本安全领域总体呈现稳中向好的发展态势，
+                        国家安全体系和能力现代化水平不断提升。
+                    </p>
+                </div>
+
+                <div class="conclusion-item">
+                    <h4>02 民众意识增强</h4>
+                    <p>
+                        全民国家安全意识显著提高，越来越多的公民主动参与到国家安全建设中来，
+                        形成了维护国家安全的强大合力。
+                    </p>
+                </div>
+
+                <div class="conclusion-item">
+                    <h4>03 挑战依然存在</h4>
+                    <p>
+                        国际形势复杂多变，传统与非传统安全威胁相互交织，
+                        需要始终保持清醒认识，做好应对各种风险挑战的准备。
+                    </p>
+                </div>
+
+                <div class="conclusion-item">
+                    <h4>04 未来发展方向</h4>
+                    <p>
+                        坚持总体国家安全观，统筹发展和安全，
+                        推进国家安全体系和能力现代化，为实现中华民族伟大复兴提供坚实安全保障。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 结束语 -->
+        <blockquote class="quote-block animate-on-scroll" style="text-align: center; font-size: 1.5rem;">
+            安全是发展的前提，发展是安全的保障。<br>
+            让我们共同守护国家安全，共筑复兴梦想！
+        </blockquote>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">国家安全调研项目</div>
+            <p class="footer-text">
+                分组一 · 思政课实践调研<br>
+                2026年春季学期<br><br>
+                <em>数据说话 · 理性分析 · 客观呈现</em>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 打字机效果
+        function initTypewriter() {
+            const texts = [
+                "政治安全是根本，国土安全是依托。",
+                "军事安全是保障，经济安全是基础。",
+                "数据说话，理性分析。",
+                "国家安全，人人有责。"
+            ];
+            
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typewriter = document.getElementById('typewriter');
+            
+            function type() {
+                const currentText = texts[textIndex];
+                
+                if (isDeleting) {
+                    typewriter.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                    
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        textIndex = (textIndex + 1) % texts.length;
+                        setTimeout(type, 500);
+                        return;
+                    }
+                } else {
+                    typewriter.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                    
+                    if (charIndex === currentText.length) {
+                        setTimeout(() => { isDeleting = true; }, 2000);
+                        setTimeout(type, 50);
+                        return;
+                    }
+                }
+                
+                const speed = isDeleting ? 50 : 100;
+                setTimeout(type, speed);
+            }
+            
+            type();
+        }
+
+        // 滚动动画（带状态记忆）
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const el = entry.target;
+                    if (entry.isIntersecting) {
+                        el.classList.add('visible');
+                        el.dataset.animated = 'true';
+                    } else if (el.dataset.animated === 'true') {
+                        el.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // 移动端菜单切换
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+
+        // 图表初始化
+        function initCharts() {
+            Chart.defaults.font.family = "'Noto Serif SC', serif";
+            Chart.defaults.color = '#2c2c2c';
+
+            // 图表2：社会安全案件指标
+            new Chart(document.getElementById('chart2'), {
+                type: 'bar',
+                data: {
+                    labels: ['刑事案件立案数', '治安案件查处数', '交通事故起数'],
+                    datasets: [{
+                        label: '同比变化率',
+                        data: [-8.2, -12.5, -15.3],
+                        backgroundColor: ['#b91c1c', '#dc2626', '#ef4444'],
+                        borderColor: '#2c2c2c',
+                        borderWidth: 2,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: { display: true, text: '同比变化 (%)' },
+                            grid: { color: '#e5e5e5' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表3：网络空间治理执法数据
+            new Chart(document.getElementById('chart3'), {
+                type: 'line',
+                data: {
+                    labels: ['2020年', '2021年', '2022年', '2023年', '2024年'],
+                    datasets: [{
+                        label: '执法案件数（万件）',
+                        data: [2.1, 3.2, 4.5, 5.8, 7.2],
+                        borderColor: '#b91c1c',
+                        backgroundColor: 'rgba(185, 28, 28, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#b91c1c',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '数量（万件）' },
+                            grid: { color: '#e5e5e5' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表4：能源安全相关指标
+            new Chart(document.getElementById('chart4'), {
+                type: 'bar',
+                data: {
+                    labels: ['清洁能源占比', '能源自给率', '石油储备天数'],
+                    datasets: [{
+                        label: '增长率',
+                        data: [18.5, 12.3, 25.6],
+                        backgroundColor: ['#b91c1c', '#d4a574', '#2c2c2c'],
+                        borderColor: '#2c2c2c',
+                        borderWidth: 2,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: { display: true, text: '增长率 (%)' },
+                            grid: { color: '#e5e5e5' }
+                        },
+                        y: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表5：网民规模与互联网普及率
+            new Chart(document.getElementById('chart5'), {
+                type: 'line',
+                data: {
+                    labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                    datasets: [
+                        {
+                            label: '网民规模（亿）',
+                            data: [8.54, 9.89, 10.32, 10.67, 10.92, 11.23],
+                            borderColor: '#b91c1c',
+                            backgroundColor: 'rgba(185, 28, 28, 0.1)',
+                            yAxisID: 'y',
+                            tension: 0.4,
+                            pointRadius: 4
+                        },
+                        {
+                            label: '互联网普及率（%）',
+                            data: [64.5, 70.4, 73.0, 75.6, 77.5, 79.8],
+                            borderColor: '#d4a574',
+                            backgroundColor: 'rgba(212, 165, 116, 0.1)',
+                            yAxisID: 'y1',
+                            tension: 0.4,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: { 
+                            position: 'top',
+                            labels: { usePointStyle: true }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            title: { display: true, text: '亿人' },
+                            grid: { color: '#e5e5e5' }
+                        },
+                        y1: {
+                            type: 'linear',
+                            position: 'right',
+                            title: { display: true, text: '%' },
+                            grid: { drawOnChartArea: false }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('.nav-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // 初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            initTypewriter();
+            initScrollAnimations();
+            initCharts();
+        });
+    </script>
+</body>
+</html>

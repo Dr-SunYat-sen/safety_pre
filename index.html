@@ -837,6 +837,7 @@
                 <li><a href="#military">军事安全</a></li>
                 <li><a href="#economy">经济安全</a></li>
                 <li><a href="#charts">数据分析</a></li>
+                <li><a href="#survey">问卷调查</a></li>
                 <li><a href="#conclusion">结论展望</a></li>
             </ul>
         </div>
@@ -1072,44 +1073,332 @@
             <p class="chart-caption">数据来源：中国互联网络信息中心 | 数字化发展态势</p>
         </div>
 
-        <!-- 结论与展望 -->
-        <section class="conclusion-section animate-on-scroll" id="conclusion">
-            <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">主要结论与未来展望</h2>
+        <!-- 问卷调查专题板块 -->
+        <section class="section-header animate-on-scroll" id="survey">
+            <div class="section-number">05</div>
+            <h2 class="section-title">大学生实地问卷调查</h2>
+        </section>
+
+        <!-- 调查概况 -->
+        <div class="hero-section animate-on-scroll" style="transform: rotate(0.5deg);">
+            <div class="hero-text">
+                <span class="card-label" style="background: var(--gold); color: var(--ink);">实地调研</span>
+                <h3 style="font-size: 2rem; margin-bottom: 1rem;">大学生国家安全了解情况<br><span style="color: var(--red);">问卷调查分析报告</span></h3>
+                <p style="font-size: 1.05rem; line-height: 1.8;">
+                    本次调查面向<span class="highlight-marker">大学生群体</span>开展，
+                    采用线上问卷形式，共回收有效问卷<strong>57份</strong>。
+                    旨在全面了解大学生对国家安全相关知识的掌握程度、认知态度及教育需求，
+                    为优化高校国家安全教育提供数据支撑。
+                </p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">57</div>
+                    <div class="stat-label">有效问卷数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">75.4%</div>
+                    <div class="stat-label">大二学生占比</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">82.5%</div>
+                    <div class="stat-label">学习意愿强烈</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 调查对象基本情况 -->
+        <blockquote class="quote-block animate-on-scroll">
+            调查对象以低年级学生为主，大二学生占比75.44%，大一10.53%，研究生7.02%，
+            大三、大四学生分别占5.26%和1.75%。符合高校学生参与度的普遍特征。
+            <div class="quote-author">—— 样本结构说明</div>
+        </blockquote>
+
+        <!-- 知识掌握情况 -->
+        <div class="magazine-grid">
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label">核心发现①</span>
+                <h3>基础认知存在明显短板</h3>
+                <p>
+                    调查发现大学生在基础安全知识方面存在显著不足：
+                </p>
+                <ul style="list-style: none; padding-left: 0; margin-top: 1rem;">
+                    <li style="padding: 0.6rem 0; border-bottom: 1px dashed #ddd;">
+                        📅 <strong>全民国家安全教育日：</strong>仅45.61%知道具体日期
+                    </li>
+                    <li style="padding: 0.6rem 0; border-bottom: 1px dashed #ddd;">
+                        📞 <strong>举报电话12339：</strong>仅47.37%正确认知
+                    </li>
+                    <li style="padding: 0.6rem 0; border-bottom: 1px dashed #ddd;">
+                        📜 <strong>《国家安全法》：</strong>仅38.6%了解基本内容
+                    </li>
+                    <li style="padding: 0.6rem 0;">
+                        🎯 <strong>2026年主题：</strong>仅33.33%了解
+                    </li>
+                </ul>
+            </article>
+
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label">核心发现②</span>
+                <h3>总体国家安全观认知不全面</h3>
+                <p>
+                    对总体国家安全观的认知存在明显偏差：
+                </p>
+                <div style="background: var(--cream); padding: 1.5rem; margin: 1rem 0; border-left: 4px solid var(--red);">
+                    <div style="font-size: 1.8rem; font-weight: 900; color: var(--red); margin-bottom: 0.5rem;">仅10.53%</div>
+                    <div style="font-size: 0.9rem; color: #666;">学生知道涵盖11个领域</div>
+                </div>
+                <p>
+                    <strong>57.89%</strong>"不太清楚"，<strong>24.56%</strong>误以为是20个领域。
+                    常见领域认知度高（政治92.98%、网络96.49%、经济89.47%），
+                    但新兴领域（太空、深海、极地、AI）认知率仅在60%-75%之间。
+                </p>
+            </article>
+        </div>
+
+        <!-- 认知态度图表 -->
+        <div class="data-visual animate-on-scroll">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">图6 大学生安全领域认知度对比</h3>
+            <div class="chart-container">
+                <canvas id="chart6"></canvas>
+            </div>
+            <p class="chart-caption">数据来源：大学生问卷调查（n=57）| 展示不同安全领域的认知差异</p>
+        </div>
+
+        <!-- 风险与态度认知 -->
+        <div class="magazine-grid">
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label" style="background: var(--gold); color: var(--ink);">关键洞察</span>
+                <h3>非传统安全风险认知不均衡</h3>
+                <p>
+                    学生对不同类型风险的认知存在显著差异：
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                    <div style="text-align: center; padding: 1rem; background: #fef2f2; border: 2px solid var(--red);">
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--red);">96.49%</div>
+                        <div style="font-size: 0.85rem;">网络安全攻击</div>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: #fffbeb; border: 2px solid var(--gold);">
+                        <div style="font-size: 2rem; font-weight: 900; color: var(--gold);">35.09%</div>
+                        <div style="font-size: 0.85rem;">恐怖主义</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.95rem;">
+                    对大学生易忽视的风险有一定认知：
+                    <strong>85.96%</strong>知道帮他人收发快递有风险，
+                    <strong>78.95%</strong>了解发布军营周边照片的隐患。
+                </p>
+            </article>
+
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label" style="background: var(--gold); color: var(--ink);">知行差距</span>
+                <h3>态度积极但能力不足</h3>
+                <p>
+                    呈现出典型的"知行差距"现象：
+                </p>
+                <div style="background: linear-gradient(135deg, var(--cream) 0%, white 100%); padding: 1.5rem; margin: 1rem 0; border: 2px dashed var(--red);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div>
+                            <div style="font-size: 1.6rem; font-weight: 900; color: var(--red);">94.73%</div>
+                            <div style="font-size: 0.85rem;">认可国家安全与生活密切相关</div>
+                        </div>
+                        <div style="font-size: 2rem;">→</div>
+                        <div>
+                            <div style="font-size: 1.6rem; font-weight: 900; color: #666;">38.6%</div>
+                            <div style="font-size: 0.85rem;">自认知识储备足够</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; font-size: 0.9rem; color: var(--red); font-weight: 700;">
+                        ⚠️ 存在56个百分点的知行差距
+                    </div>
+                </div>
+                <p>
+                    <strong>82.46%</strong>非常同意维护安全是公民责任<br>
+                    <strong>85.96%</strong>表示会主动举报危害行为<br>
+                    但<strong>17.54%</strong>认为自身知识"不足"
+                </p>
+            </article>
+        </div>
+
+        <!-- 教育需求图表 -->
+        <div class="data-visual animate-on-scroll">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">图7 大学生安全教育需求偏好</h3>
+            <div class="chart-container">
+                <canvas id="chart7"></canvas>
+            </div>
+            <p class="chart-caption">数据来源：大学生问卷调查 | 展示教育形式与渠道偏好</p>
+        </div>
+
+        <!-- 教育现状与需求 -->
+        <div class="magazine-grid">
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label">教育资源评价</span>
+                <h3>供给整体积极，形式待优化</h3>
+                <p>
+                    对学校教育资源的评价：
+                </p>
+                <ul style="padding-left: 1.5rem; line-height: 2; margin-top: 1rem;">
+                    <li><strong>64.91%</strong> 认为资源"充足"</li>
+                    <li><strong>64.91%</strong> 认为效果"很好，收获颇丰"</li>
+                    <li><strong>12.28%</strong> 认为"流于形式"</li>
+                    <li>仅<strong>7.02%</strong> 认为"不充足"</li>
+                </ul>
+            </article>
+
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label">学习渠道</span>
+                <h3>知识获取路径集中</h3>
+                <p>
+                    学生获取安全知识的渠道高度集中：
+                </p>
+                <ol style="padding-left: 1.5rem; line-height: 2.2; margin-top: 1rem;">
+                    <li><strong>学校课程/讲座</strong> — 84.21%</li>
+                    <li><strong>官方新闻媒体</strong> — 70.18%</li>
+                    <li><strong>社交媒体/短视频</strong> — 70.18%</li>
+                    <li style="color: #999;"><strong>校园海报/同学交流</strong> — 利用率较低</li>
+                </ol>
+            </article>
+        </div>
+
+        <!-- 形式偏好展示 -->
+        <div class="data-visual animate-on-scroll" style="transform: rotate(-0.3deg);">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">最受学生欢迎的教育形式 TOP 3</h3>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin: 2rem 0;">
+                <div style="text-align: center; padding: 2rem 1rem; background: var(--cream); border: 3px solid var(--red); transform: rotate(-2deg);">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎬</div>
+                    <div style="font-size: 2.2rem; font-weight: 900; color: var(--red);">64.91%</div>
+                    <div style="font-size: 1rem; font-weight: 700; margin-top: 0.5rem;">短视频/电影</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.3rem;">最受欢迎</div>
+                </div>
+                <div style="text-align: center; padding: 2rem 1rem; background: var(--cream); border: 3px solid var(--gold); transform: rotate(1deg);">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📚</div>
+                    <div style="font-size: 2.2rem; font-weight: 900; color: var(--gold);">63.16%</div>
+                    <div style="font-size: 1rem; font-weight: 700; margin-top: 0.5rem;">案例讲座</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.3rem;">紧随其后</div>
+                </div>
+                <div style="text-align: center; padding: 2rem 1rem; background: var(--cream); border: 3px solid var(--ink); transform: rotate(-1deg);">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🏆</div>
+                    <div style="font-size: 2.2rem; font-weight: 900; color: var(--ink);">36.84%</div>
+                    <div style="font-size: 1rem; font-weight: 700; margin-top: 0.5rem;">知识竞赛</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 0.3rem;">互动性强</div>
+                </div>
+            </div>
+            <p style="text-align: center; font-style: italic; color: #666; margin-top: 1rem;">
+                💡 学生更倾向于互动性、体验式的教育形式
+            </p>
+        </div>
+
+        <!-- 问题与建议 -->
+        <section class="section-header animate-on-scroll">
+            <div class="section-number">⚡</div>
+            <h2 class="section-title">问题诊断与改进建议</h2>
+        </section>
+
+        <div class="conclusion-section animate-on-scroll" style="background: white; color: var(--ink); border: 2px solid var(--border);">
+            <h3 style="font-size: 1.8rem; margin-bottom: 2rem; color: var(--red);">🔍 发现的四大核心问题</h3>
             
-            <div class="conclusion-grid">
-                <div class="conclusion-item">
-                    <h4>01 整体态势向好</h4>
-                    <p>
-                        调研数据表明，我国四大基本安全领域总体呈现稳中向好的发展态势，
-                        国家安全体系和能力现代化水平不断提升。
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <div style="border-left: 4px solid var(--red); padding-left: 1.5rem;">
+                    <h4 style="font-size: 1.2rem; color: var(--red); margin-bottom: 0.8rem;">❌ 基础知识不扎实</h4>
+                    <p style="font-size: 0.95rem; color: #555;">
+                        安全教育日、举报电话、《国家安全法》等基础常识认知率不足，
+                        新兴领域和总体国家安全观核心内容存在明显短板。
                     </p>
                 </div>
 
-                <div class="conclusion-item">
-                    <h4>02 民众意识增强</h4>
-                    <p>
-                        全民国家安全意识显著提高，越来越多的公民主动参与到国家安全建设中来，
-                        形成了维护国家安全的强大合力。
+                <div style="border-left: 4px solid var(--gold); padding-left: 1.5rem;">
+                    <h4 style="font-size: 1.2rem; color: var(--gold); margin-bottom: 0.8rem;">⚠️ 知行转化差距大</h4>
+                    <p style="font-size: 0.95rem; color: #555;">
+                        多数学生认可重要性，但知识储备不足以应对日常风险，
+                        认知态度未有效转化为实际能力。
                     </p>
                 </div>
 
-                <div class="conclusion-item">
-                    <h4>03 挑战依然存在</h4>
-                    <p>
-                        国际形势复杂多变，传统与非传统安全威胁相互交织，
-                        需要始终保持清醒认识，做好应对各种风险挑战的准备。
+                <div style="border-left: 4px solid var(--ink); padding-left: 1.5rem;">
+                    <h4 style="font-size: 1.2rem; color: var(--ink); margin-bottom: 0.8rem;">📉 教育形式吸引力不足</h4>
+                    <p style="font-size: 0.95rem; color: #555;">
+                        部分学生认为教育"流于形式"，传统课堂式难以满足需求，
+                        互动性、体验式教育覆盖不足。
                     </p>
                 </div>
 
-                <div class="conclusion-item">
-                    <h4>04 未来发展方向</h4>
-                    <p>
-                        坚持总体国家安全观，统筹发展和安全，
-                        推进国家安全体系和能力现代化，为实现中华民族伟大复兴提供坚实安全保障。
+                <div style="border-left: 4px solid var(--red); padding-left: 1.5rem;">
+                    <h4 style="font-size: 1.2rem; color: var(--red); margin-bottom: 0.8rem;">🎯 内容针对性不强</h4>
+                    <p style="font-size: 0.95rem; color: #555;">
+                        对兼职窃密、网络泄密等易忽视风险的教育不足，
+                        太空、AI等新兴领域普及较少。
                     </p>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- 改进建议 -->
+        <div class="magazine-grid" style="margin-top: 3rem;">
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label" style="background: #16a34a; color: white;">建议①</span>
+                <h3>强化基础常识普及</h3>
+                <p>
+                    结合全民国家安全教育日、《国家安全法》颁布日等节点开展主题宣传；
+                    通过校园广播、公众号推送、知识问答等形式常态化推送安全知识，
+                    提升学生的基础认知率。
+                </p>
+                <div style="background: #f0fdf4; padding: 1rem; margin-top: 1rem; border-left: 3px solid #16a34a;">
+                    <strong>目标：</strong>让每个学生都能说出12339，知道安全教育日
+                </div>
+            </article>
+
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label" style="background: #16a34a; color: white;">建议②</span>
+                <h3>优化教育内容增强针对性</h3>
+                <p>
+                    聚焦大学生兼职、社交、网络使用等高频场景开展案例教学；
+                    重点讲解兼职窃密、网络泄密、境外调研陷阱等风险；
+                    增加太空安全、AI安全、生物安全等新兴领域内容。
+                </p>
+                <div style="background: #f0fdf4; padding: 1rem; margin-top: 1rem; border-left: 3px solid #16a34a;">
+                    <strong>重点：</strong>从学生真实场景出发，讲他们听得懂的故事
+                </div>
+            </article>
+
+            <article class="article-card animate-on-scroll left">
+                <span class="card-label" style="background: #16a34a; color: white;">建议③</span>
+                <h3>创新教育形式提升参与度</h3>
+                <p>
+                    多开展案例讲座、短视频展播、知识竞赛、模拟演练等互动式教育活动；
+                    利用校园新媒体平台制作轻量化、趣味性安全科普内容，
+                    提升教育的趣味性和传播力。
+                </p>
+                <div style="background: #f0fdf4; padding: 1rem; margin-top: 1rem; border-left: 3px solid #16a34a;">
+                    <strong>方向：</strong>让学生从"被动听"变为"主动玩"
+                </div>
+            </article>
+
+            <article class="article-card animate-on-scroll right">
+                <span class="card-label" style="background: #16a34a; color: white;">建议④</span>
+                <h3>完善教育体系推动知行合一</h3>
+                <p>
+                    将国家安全教育融入日常课程和校园文化；
+                    建立"课堂教学 + 实践活动 + 线上学习"的多元教育体系；
+                    通过情景模拟、举报流程演练提升实际应对能力。
+                </p>
+                <div style="background: #f0fdf4; padding: 1rem; margin-top: 1rem; border-left: 3px solid #16a34a;">
+                    <strong>愿景：</strong>让认知真正转化为行动
+                </div>
+            </article>
+        </div>
+
+        <!-- 结语 -->
+        <blockquote class="quote-block animate-on-scroll" style="background: linear-gradient(135deg, var(--cream) 0%, #fff 100%);">
+            本次调查显示，大学生对国家安全的重要性有较高的认同度，学习意愿较强，
+            但基础知识掌握、知行转化、教育形式等方面仍存在不足。
+            高校需以问题为导向，优化国家安全教育内容与形式，
+            补齐教育短板，切实提升大学生的国家安全素养，筑牢校园安全防线。
+            <div class="quote-author">—— 问卷调查结语</div>
+        </blockquote>
+
+        <!-- 结论与展望 -->
+        <section class="conclusion-section animate-on-scroll" id="conclusion">
+            <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">主要结论与未来展望</h2>
 
         <!-- 结束语 -->
         <blockquote class="quote-block animate-on-scroll" style="text-align: center; font-size: 1.5rem;">
@@ -1364,6 +1653,119 @@
                         },
                         x: {
                             grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表6：大学生安全领域认知度对比
+            new Chart(document.getElementById('chart6'), {
+                type: 'bar',
+                data: {
+                    labels: ['政治安全', '网络安全', '经济安全', '军事安全', '国土安全', '太空/深海/AI'],
+                    datasets: [{
+                        label: '认知度 (%)',
+                        data: [92.98, 96.49, 89.47, 85.0, 82.0, 67.5],
+                        backgroundColor: [
+                            '#b91c1c',
+                            '#dc2626',
+                            '#ef4444',
+                            '#f87171',
+                            '#fca5a5',
+                            '#d4a574'
+                        ],
+                        borderColor: '#2c2c2c',
+                        borderWidth: 2,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.x + '% 认知度';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: '认知度 (%)' },
+                            grid: { color: '#e5e5e5' }
+                        },
+                        y: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表7：大学生安全教育需求偏好
+            new Chart(document.getElementById('chart7'), {
+                type: 'radar',
+                data: {
+                    labels: ['案例讲座', '短视频/电影', '知识竞赛', '课堂教学', '宣传海报', '模拟演练'],
+                    datasets: [
+                        {
+                            label: '偏好度 (%)',
+                            data: [63.16, 64.91, 36.84, 45.0, 28.0, 42.0],
+                            backgroundColor: 'rgba(185, 28, 28, 0.2)',
+                            borderColor: '#b91c1c',
+                            borderWidth: 3,
+                            pointBackgroundColor: '#b91c1c',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 8
+                        },
+                        {
+                            label: '实际覆盖率 (%)',
+                            data: [55.0, 40.0, 20.0, 84.21, 35.0, 15.0],
+                            backgroundColor: 'rgba(212, 165, 116, 0.2)',
+                            borderColor: '#d4a574',
+                            borderWidth: 3,
+                            pointBackgroundColor: '#d4a574',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            position: 'top',
+                            labels: { usePointStyle: true }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 11
+                                }
+                            },
+                            grid: {
+                                color: '#e5e5e5'
+                            },
+                            angleLines: {
+                                color: '#e5e5e5'
+                            }
                         }
                     }
                 }

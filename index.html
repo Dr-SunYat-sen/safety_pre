@@ -745,6 +745,17 @@
             .data-visual {
                 padding: 1.5rem;
             }
+
+            /* 移动端图表7特殊优化 */
+            #chart7 {
+                max-height: 280px !important;
+            }
+
+            /* 雷达图在小屏幕上的样式调整 */
+            .data-visual:has(#chart7) {
+                padding: 1rem !important;
+                overflow-x: hidden;
+            }
         }
 
         @media (max-width: 480px) {
@@ -2124,7 +2135,13 @@
                     plugins: {
                         legend: { 
                             position: 'top',
-                            labels: { usePointStyle: true }
+                            labels: { 
+                                usePointStyle: true,
+                                font: {
+                                    size: window.innerWidth < 768 ? 10 : 12
+                                },
+                                padding: window.innerWidth < 768 ? 10 : 15
+                            }
                         }
                     },
                     scales: {
@@ -2132,12 +2149,18 @@
                             beginAtZero: true,
                             max: 100,
                             ticks: {
-                                stepSize: 20
+                                stepSize: 20,
+                                font: {
+                                    size: window.innerWidth < 768 ? 9 : 11
+                                },
+                                backdropColor: 'transparent'
                             },
                             pointLabels: {
                                 font: {
-                                    size: 11
-                                }
+                                    size: window.innerWidth < 768 ? 9 : 11,
+                                    weight: window.innerWidth < 768 ? '500' : '600'
+                                },
+                                padding: window.innerWidth < 768 ? 6 : 12
                             },
                             grid: {
                                 color: '#e5e5e5'
